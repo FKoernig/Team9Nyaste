@@ -25,7 +25,6 @@ public class BlogPostTemplate extends javax.swing.JPanel {
     private String id;
     private String userID;
     
-    
     public BlogPostTemplate() {
         initComponents();
         validator = new Validator();
@@ -74,6 +73,16 @@ public class BlogPostTemplate extends javax.swing.JPanel {
     
     public void setUserID(String id) {
         userID = id;
+    }
+    
+    public void notEditable() {
+        btnTabortInlagg.setVisible(false);
+        btnSave.setVisible(false);
+        txtText.setEditable(false);
+        lblTitle.setEditable(false);
+        lblTitle.setBorder(null);
+        txtText.setBorder(null);
+        btnEdit.setVisible(true);   
     }
 
 
@@ -252,21 +261,24 @@ public class BlogPostTemplate extends javax.swing.JPanel {
 
     private void btnTabortInlaggActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTabortInlaggActionPerformed
         // TODO add your handling code here:
-        
-         try{ 
-        idb.delete("DELETE FROM inlagg WHERE inlaggsid = " + id);
-        btnTabortInlagg.setVisible(false);
-        btnSave.setVisible(false);
-        btnEdit.setVisible(false);
-       
-    }
-         catch(InfException e)
-       {
-       JOptionPane.showMessageDialog(null, "Ett fel uppstod.");
-                System.out.println("Internt felmeddelande:" + e.getMessage());
-       }
-         
-        
+
+        try {
+            idb.delete("delete from kommentar where inlaggsid =" + id);
+            idb.delete("delete from formell where inlaggsid =" + id);
+            idb.delete("delete from informell where inlaggsid =" + id);
+            idb.delete("DELETE FROM inlagg WHERE inlaggsid = " + id);
+            btnTabortInlagg.setVisible(false);
+            btnSave.setVisible(false);
+            btnEdit.setVisible(false);
+            txtText.setText("Inlägget borttaget");
+            lblTitle.setText("");
+
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Ett fel uppstod.");
+            System.out.println("Internt felmeddelande:" + e.getMessage());
+        }
+
+
     }//GEN-LAST:event_btnTabortInlaggActionPerformed
 
 

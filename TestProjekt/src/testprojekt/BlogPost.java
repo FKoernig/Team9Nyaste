@@ -15,12 +15,12 @@ public class BlogPost {
     
     private String id;
     private String author;
-    private Date date;
+    private String date;
     private String title;
     private String text;
     private String category;
     
-    public BlogPost(String id, String author, Date date, String title, String text, String category) {
+    public BlogPost(String id, String author, String date, String title, String text, String category) {
         this.id = id;
         this.author = author;
         this.date = date; 
@@ -38,7 +38,7 @@ public class BlogPost {
         return id;
     }
     
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
     

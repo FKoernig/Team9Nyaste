@@ -5,9 +5,12 @@
  */
 package testprojekt;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -35,6 +38,24 @@ public class Comments extends javax.swing.JFrame {
         pnlNewComment.setVisible(false);
         pnlComments.setVisible(true);
         displayComments();
+        
+                txtText.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent remove) {
+                updateLetterCount();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent insert) {
+                updateLetterCount();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent changed) {
+                updateLetterCount();
+            }
+        });
     }
 
     /**
@@ -53,8 +74,8 @@ public class Comments extends javax.swing.JFrame {
         pnlNewComment = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtText = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblLetterCount = new javax.swing.JLabel();
+        lblMaxLetters = new javax.swing.JLabel();
         btnComment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -96,10 +117,10 @@ public class Comments extends javax.swing.JFrame {
         txtText.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtText);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("0");
+        lblLetterCount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblLetterCount.setText("0");
 
-        jLabel2.setText("/200");
+        lblMaxLetters.setText("/200");
 
         btnComment.setText("Kommentera");
         btnComment.addActionListener(new java.awt.event.ActionListener() {
@@ -119,9 +140,9 @@ public class Comments extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(pnlNewCommentLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLetterCount, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMaxLetters, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                         .addComponent(btnComment)
                         .addGap(67, 67, 67))))
@@ -134,8 +155,8 @@ public class Comments extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlNewCommentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlNewCommentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2))
+                        .addComponent(lblLetterCount)
+                        .addComponent(lblMaxLetters))
                     .addComponent(btnComment))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
@@ -226,14 +247,45 @@ public class Comments extends javax.swing.JFrame {
         }
         return result;
     }
+    
+        private void updateLetterCount() {
+        String text = txtText.getText();
+        int count = text.length();
+        String LetterCount = Integer.toString(count);
+        lblLetterCount.setText(LetterCount);
+        if(count <= 200) {
+            updateLetterCountColor(false);
+        } else {
+            updateLetterCountColor(true);
+        }
+    }
+    
+    private void updateLetterCountColor (boolean tooManyLetters) {
+        if(tooManyLetters) {
+            lblMaxLetters.setForeground(Color.red);
+            lblLetterCount.setForeground(Color.red);
+        } else {
+            lblMaxLetters.setForeground(Color.black);
+            lblLetterCount.setForeground(Color.black);
+        }
+        updatePostButton(tooManyLetters);
+    }
+    
+    private void updatePostButton(boolean tooManyLetters) {
+        if(tooManyLetters) {
+            btnComment.setEnabled(false);
+        } else {
+            btnComment.setEnabled(true);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComment;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblLetterCount;
+    private javax.swing.JLabel lblMaxLetters;
     private javax.swing.JPanel pnlComments;
     private javax.swing.JPanel pnlNewComment;
     private javax.swing.JTextPane txtComments;

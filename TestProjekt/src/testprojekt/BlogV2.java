@@ -36,7 +36,8 @@ public class BlogV2 extends javax.swing.JFrame {
     Profile profile;
     Validator validator;
     SimpleDateFormat dateFormat;
-    NewCategoryWindow newCategory; 
+    NewCategoryWindow newCategory;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
     ArrayList<BlogPost> blogPosts;
     
@@ -46,7 +47,7 @@ public class BlogV2 extends javax.swing.JFrame {
 
     MouseAdapter clickListenerNext = (new MouseAdapter() {  
         public void mouseClicked(MouseEvent c)  
-        {  
+        {   
            displayPage++;
            displayPosts(displayPage);
         }  
@@ -110,12 +111,14 @@ public class BlogV2 extends javax.swing.JFrame {
         displayPosts(displayPage);
     }
     
+    
     public void addPost(BlogPost post) {
         blogPosts.add(0, post);
     }
     
     public void displayPost(int templateNumber, int page) {
         BlogPostTemplate[] templates = {post1, post2, post3, post4, post5};
+        templates[templateNumber].notEditable();
         BlogPostTemplate template = templates[templateNumber];
         //int post = page == 0 ? templateNumber : page + 4 + templateNumber;
         int post = page * 5 + templateNumber;
@@ -133,7 +136,7 @@ public class BlogV2 extends javax.swing.JFrame {
             
             template.setUserID(userID);
             
-            String date = formatDate(blogPosts.get(post).getDate());
+            String date = blogPosts.get(post).getDate();
             template.setDate(date);
             
             if(findUserName(userID).equals(blogPosts.get(post).getAuthor())) {
@@ -191,7 +194,7 @@ public class BlogV2 extends javax.swing.JFrame {
     
     private void updateLetterCount() {
         String text = txtText.getText();
-        int count = countLetters(text);
+        int count = text.length();
         String LetterCount = Integer.toString(count);
         lblLetterCount.setText(LetterCount);
         if(count <= 2500) {
@@ -299,7 +302,7 @@ public class BlogV2 extends javax.swing.JFrame {
                             String inlaggsid = post.get("INLAGGSID");
                             String kategori = post.get("KAID");
                             String id = post.get("ANVANDAR_ID");
-                            Date datum = new Date();
+                            String datum = post.get("DATUM");
                             BlogPost blogPost = new BlogPost(inlaggsid, findUserName(id), datum, rubrik, text, kategori);
                             addPost(blogPost);
                         }
@@ -313,7 +316,7 @@ public class BlogV2 extends javax.swing.JFrame {
                             String inlaggsid = post.get("INLAGGSID");
                             String kategori = post.get("KAID");
                             String id = post.get("ANVANDAR_ID");
-                            Date datum = new Date();
+                            String datum = post.get("DATUM");
                             BlogPost blogPost = new BlogPost(inlaggsid, findUserName(id), datum, rubrik, text, kategori);
                             addPost(blogPost);
                         }
@@ -807,8 +810,8 @@ public class BlogV2 extends javax.swing.JFrame {
 
                 String postID = Integer.toString(id);
 
-                System.out.println("test");
-                String query = "INSERT into Inlagg values('" + title + "', '" + text + "', " + id + ", " + userID + ", " + category + ");";
+                String date = sdf.format(new Date());
+                String query = "INSERT into Inlagg values('" + title + "', '" + text + "', " + id + ", " + userID + ", " + category + ", '" + date + "');";
                 idb.insert(query);
                 if (cbFormal.getSelectedItem().equals("Formellt inlägg")) {
                     query = "INSERT INTO Formell values(" + id + ")";
@@ -818,7 +821,7 @@ public class BlogV2 extends javax.swing.JFrame {
                     idb.insert(query);
                 }
 
-                BlogPost post = new BlogPost(postID, author, new Date(), title, text, category);
+                BlogPost post = new BlogPost(postID, author, date, title, text, category);
                 addPost(post);
                 displayPage = 0;
                 displayPosts(displayPage);
