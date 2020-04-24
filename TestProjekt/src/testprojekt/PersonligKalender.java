@@ -62,7 +62,7 @@ public class PersonligKalender extends javax.swing.JFrame {
         txtArean.setRows(5);
         jScrollPane1.setViewportView(txtArean);
 
-        jButton1.setText("Ok!");
+        jButton1.setText("OK!");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

@@ -119,4 +119,34 @@ public class Validator {
         }
         return valid;
     }
+    
+    public boolean validateInvite(String motesID, String anvandarnamn, String anvandarID){
+        boolean valid = true;
+        String motesAdmin = "";
+        try {
+            String query = "select count(*) from mote where mid = " + motesID;
+            String test = idb.fetchSingle(query);
+            if (!idb.fetchSingle(query).equals("0")) {
+                motesAdmin = idb.fetchSingle("select anvandar_id from mote where mid =" +  motesID);
+                System.out.println("AID: " + anvandarID + ", MotesAdmin: " + motesAdmin);
+                if (anvandarID.equals(motesAdmin)) {
+                    String query2 = "select count(*) from anvandare where anvandar_namn = '" + anvandarnamn + "'";
+                    System.out.println("Test: " + idb.fetchSingle(query2));
+                    if (idb.fetchSingle(query2).equals("0")) {
+                        JOptionPane.showMessageDialog(null, "Ogiltigt användarnamn");
+                        valid = false;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Du är inte administratör för detta möte");
+                    valid = false;
+                }               
+            } else {
+                JOptionPane.showMessageDialog(null, "Ogiltigt mötes-id");
+                valid = false;
+            }
+        } catch(InfException ie) {
+            System.out.println(ie.getMessage());
+        }
+        return valid;
+    }
 }

@@ -371,7 +371,7 @@ public class BlogV2 extends javax.swing.JFrame {
         btnSokProfil = new javax.swing.JButton();
         txtSok = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
-        Kalender = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         pnlNewPostTab = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
@@ -535,10 +535,10 @@ public class BlogV2 extends javax.swing.JFrame {
             }
         });
 
-        Kalender.setText("Kalender");
-        Kalender.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setText("Kalender");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KalenderActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -562,7 +562,7 @@ public class BlogV2 extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(cbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbShowFormal, 0, 172, Short.MAX_VALUE)
+                                            .addComponent(cbShowFormal, 0, 174, Short.MAX_VALUE)
                                             .addComponent(txtSearch))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnShow, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -582,7 +582,7 @@ public class BlogV2 extends javax.swing.JFrame {
                                 .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(Kalender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -608,8 +608,8 @@ public class BlogV2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Kalender)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(btnNewPost, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67)
                 .addComponent(jButton3)
@@ -925,9 +925,10 @@ public class BlogV2 extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void KalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KalenderActionPerformed
-        
-    }//GEN-LAST:event_KalenderActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new Kalendern(userID).setVisible(true); 
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     public String findCategoryID(String category) {    
         String result = "";
@@ -951,7 +952,7 @@ public class BlogV2 extends javax.swing.JFrame {
         return result;
     }
     
-    public String findUserName(String id) {    
+    public String findUserName(String id) {   
         String result = "";
         try {
             String query = "SELECT Anvandar_namn FROM Anvandare WHERE Anvandar_ID = '" + id + "'";
@@ -998,7 +999,6 @@ public class BlogV2 extends javax.swing.JFrame {
    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Kalender;
     private javax.swing.JButton btnNewPost;
     private javax.swing.JButton btnPost;
     private javax.swing.JToggleButton btnShow;
@@ -1011,6 +1011,7 @@ public class BlogV2 extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblFilter;
