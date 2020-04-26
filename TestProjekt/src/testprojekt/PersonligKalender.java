@@ -35,6 +35,7 @@ public class PersonligKalender extends javax.swing.JFrame {
       
         uid = userID; 
         idb = TestProjekt.getDB();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -52,7 +53,7 @@ public class PersonligKalender extends javax.swing.JFrame {
         txtArean = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 255));
@@ -128,47 +129,32 @@ public class PersonligKalender extends javax.swing.JFrame {
          
          
          
-         try {
-            String fragaNoll = ("SELECT MID,PLATS,AMNE,TID from mote where datum = '" + datum + "' and anvandar_id = '"+ nuvarandeAnvandarId+ "'");
-            
-            
-                    
-            ArrayList<HashMap<String,String>> allamoten =idb.fetchRows(fragaNoll);
-            
-            if (allamoten != null){
-                
-            String utskrift = "";
-            String streck = "------------------------------------------------------------------------------------"; 
-            
-            for (int i = 0; i < allamoten.size() ; i++) {
-            utskrift = utskrift + "MötesID: " + allamoten.get(i).get("MID") + "   Tid: " + allamoten.get(i).get("TID") + "   Plats: " + allamoten.get(i).get("PLATS") + "   Ämne: " + allamoten.get(i).get("AMNE") + "\n" + streck +
-                   "\n";
-            
-            }
-            
-                 txtArean.setText(utskrift);
-         }
-            
-            else{
+        try {
+            String fragaNoll = ("SELECT MID,PLATS,AMNE,TID from mote where datum = '" + datum + "' and mid in (select mote from motesdeltagare where anvandare = " + uid + ")");
+
+            ArrayList<HashMap<String, String>> allamoten = idb.fetchRows(fragaNoll);
+
+            if (allamoten != null) {
+
+                String utskrift = "";
+                String streck = "------------------------------------------------------------------------------------";
+
+                for (int i = 0; i < allamoten.size(); i++) {
+                    utskrift = utskrift + "MötesID: " + allamoten.get(i).get("MID") + "   Tid: " + allamoten.get(i).get("TID") + "   Plats: " + allamoten.get(i).get("PLATS") + "   Ämne: " + allamoten.get(i).get("AMNE") + "\n" + streck
+                            + "\n";
+
+                }
+
+                txtArean.setText(utskrift);
+            } else {
                 txtArean.setText("Inga möten inbokade denna dag!");
             }
-         }
-               
-            catch (InfException exx) {
-            
-             Logger.getLogger(PersonligKalender.class.getName()).log(Level.SEVERE, null, exx);
+        } catch (InfException exx) {
+
+            Logger.getLogger(PersonligKalender.class.getName()).log(Level.SEVERE, null, exx);
         }
-         
-         //txtArean.setText(allamoten);
-         
-         
-        
-        
-    
-        
-        
-        
-               
+
+        //txtArean.setText(allamoten);           
     
     }//GEN-LAST:event_jButton1ActionPerformed
 

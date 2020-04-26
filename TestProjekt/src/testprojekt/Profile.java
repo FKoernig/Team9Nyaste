@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package testprojekt;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 /**
@@ -13,17 +14,21 @@ import oru.inf.InfException;
 public class Profile extends javax.swing.JFrame {
 
     InfDB idb;
+    String userID;
+    String profileID;
     /**
      * Creates new form Profile
      */
     public Profile(InfDB idb, String name, String phone, String email) {
+        this.userID = userID;
+        this.profileID = profileID;
         initComponents();
         setLocationRelativeTo(this);
         lblNameValue.setText(name);
         lblPhoneValue.setText(phone);
         lblEmailValue.setText(email);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

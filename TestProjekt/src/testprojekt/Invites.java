@@ -28,6 +28,7 @@ public class Invites extends javax.swing.JFrame {
         this.userID = userID;
         idb = TestProjekt.getDB();
         showInvites();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -55,7 +56,7 @@ public class Invites extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         listInvites.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -82,6 +83,11 @@ public class Invites extends javax.swing.JFrame {
         });
 
         jButton2.setText("Neka");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("ID:");
 
@@ -178,6 +184,7 @@ public class Invites extends javax.swing.JFrame {
         
         }
         showInvites();
+        removeText();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void listInvitesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listInvitesValueChanged
@@ -202,6 +209,19 @@ public class Invites extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listInvitesValueChanged
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String meetingID = lblID.getText();
+            String query = "delete from inbjudningar where mote = " + meetingID + " and anvandar_id = " + userID;
+            idb.delete(query);
+        } catch(InfException ie) {
+            System.out.println(ie.getMessage());
+        }
+        showInvites();
+        removeText();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public void showInvites() {
         DefaultListModel meetingListModel = new DefaultListModel();
         String query = "SELECT mote FROM inbjudningar where anvandar_id = " + userID;
@@ -223,6 +243,14 @@ public class Invites extends javax.swing.JFrame {
         } catch (InfException ie) {
             System.out.println(ie.getMessage());
         }
+    }
+    
+    public void removeText() {
+        lblDate.setText("");
+        lblLocation.setText("");
+        lblTopic.setText("");
+        lblTime.setText("");
+        lblID.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
